@@ -1,0 +1,14 @@
+## Visual Studio служебные файлы
+.vs/
+*.user
+*.suo
+*.userossc
+
+## Папки скомпилированного кода
+bin/
+obj/
+out/
+
+## Другие локальные логи
+[Db]ebug/
+[R]elease/
