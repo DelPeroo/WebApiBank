@@ -11,7 +11,7 @@ public class UsersController : ControllerBase
 {
     private readonly AppDbContext _context;
 
-    // Внедряем через конструктор наш контекст базы данных
+    
     public UsersController(AppDbContext context)
     {
         _context = context;
@@ -51,5 +51,19 @@ public class UsersController : ControllerBase
             .ToListAsync();
 
         return Ok(users);
+    }
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteUser(int id)
+    {
+        var user = await _context.Users
+            .Include(u => u.Wallet)
+            .FirstOrDefaultAsync(u => u.Id == id);
+        if (user == null) 
+        {
+            return NotFound("Пользователь не найден");
+        }
+        _context.Users.Remove(user);
+        await _context.SaveChangesAsync();
+        return NoContent();
     }
 }
